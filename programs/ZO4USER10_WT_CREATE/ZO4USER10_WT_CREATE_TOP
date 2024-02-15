@@ -1,0 +1,27 @@
+*&---------------------------------------------------------------------*
+*& Include ZO4USER10_WT_CREATE_TOP                  - Module Pool      ZO4USER10_WT_CREATE
+*&---------------------------------------------------------------------*
+PROGRAM ZO4USER10_WT_CREATE.
+
+DATA  : lt_create  TYPE /scwm/tt_to_create_int,
+        ls_create  TYPE /scwm/s_to_create_int,
+        lt_bapiret TYPE bapirettab,
+        lv_matid   TYPE raw16,
+        lv_matnr   TYPE matnr,
+        lv_tanum type /SCWM/TANUM.
+
+
+TABLES: /scwm/s_asp_mat,
+        /scwm/s_asp_hu_ad,
+        /scwm/s_aspq_mat,
+        /scwm/s_aspq_hu,
+        /scwm/s_ui_adhoc,
+
+        /scwm/s_asp_mat_int,
+        /scwm/s_asp_hu_int,
+        /scwm/s_asp_mat_stock,
+        /scwm/s_asp_mat_master,
+        /scwm/s_asp_hu_master,
+
+        /scwm/s_asp_ser,
+        /scwm/s_asp_ser_odp2.

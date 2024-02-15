@@ -1,0 +1,13 @@
+*&---------------------------------------------------------------------*
+*& Module Pool      Z_DISPLAY_HU
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+
+INCLUDE Z_DISPLAY_HU_TOP                        .    " Global Data
+
+ INCLUDE Z_DISPLAY_HU_O01                        .  " PBO-Modules
+* INCLUDE Z_DISPLAY_HU_I01                        .  " PAI-Modules
+ INCLUDE Z_DISPLAY_HU_F01                        .  " FORM-Routines
+
+INCLUDE z_display_hu_status_0100o01.     " PAI-Modules

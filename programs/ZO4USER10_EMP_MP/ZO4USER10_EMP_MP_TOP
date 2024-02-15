@@ -1,0 +1,17 @@
+*&---------------------------------------------------------------------*
+*& Include ZO4USER10_EMP_MP_TOP                     - Module Pool      ZO4USER10_EMP_MP
+*&---------------------------------------------------------------------*
+PROGRAM ZO4USER10_EMP_MP.
+
+DATA gs_sample_emp TYPE ZO4USER10_EMP.
+
+SELECTION-SCREEN BEGIN OF SCREEN 0300.
+
+PARAMETERS :
+EMP_NAME type CHAR20,
+EMP_CITY type CHAR20,
+EMP_AGE type int4,
+CONTACT type int4.
+
+
+selection-SCREEN END OF SCREEN 0300.

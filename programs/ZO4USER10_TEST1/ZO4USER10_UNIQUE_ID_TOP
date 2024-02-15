@@ -1,0 +1,9 @@
+*&---------------------------------------------------------------------*
+*& Include ZO4USER10_UNIQUE_ID_TOP                  - Module Pool      ZO4USER10_TEST1
+*&---------------------------------------------------------------------*
+PROGRAM zo4user10_test1.
+
+Tables: ZO4USER10_EMP.
+
+DATA : Married   TYPE boolean,
+       Unmarried TYPE boolean.

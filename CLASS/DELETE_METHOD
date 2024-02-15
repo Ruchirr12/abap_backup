@@ -1,0 +1,15 @@
+  method DELETE_METHOD.
+    DATA: wa_emp TYPE ZDEMO1.
+
+    DELETE FROM ZDEMO1 WHERE EMP_ID = EMP_ID .
+*
+*select single * into corresponding fields of wa_emp
+*  from zo4user5_emp02 where Employee_id = Employee_id.
+*
+*  wa_emp-employee_id = Employee_id.
+    IF sy-subrc = 0.
+      WRITE: 'Data Successfully Deleted'.
+    ELSE.
+      WRITE: 'Error when deleting data'.
+    ENDIF.
+  endmethod.

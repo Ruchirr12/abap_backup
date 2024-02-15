@@ -1,0 +1,90 @@
+*&---------------------------------------------------------------------*
+*& Include          Z_MATERIAL_CHANGE_I01
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2222  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2222 INPUT.
+  BREAK-POINT.
+  CASE SY-UCOMM.
+    WHEN 'READ'.
+        BREAK-POINT.
+       CALL FUNCTION 'CONVERSION_EXIT_MDLPD_INPUT'
+        EXPORTING
+          input  = 'CCG-001'
+        IMPORTING
+          output = lv_matid.
+
+      CALL FUNCTION 'CONVERSION_EXIT_MDLPD_OUTPUT'
+        EXPORTING
+          input  = lv_matid
+        IMPORTING
+          output = lv_matnr.
+
+     ls_LANGU = 'EN'.
+     ls_ENTITLED = 'BP1710'.
+     ls_LGNUM  = '1710'.
+
+      CALL FUNCTION '/SCWM/MATERIAL_READ_SINGLE'
+        EXPORTING
+          iv_matid                          = lv_matid
+         IV_ENTITLED                       = ls_entitled
+         IV_LGNUM                          = '1710'
+       IMPORTING
+         ES_MAT_LGNUM                      = LS_DATAA
+    EXCEPTIONS
+          /SCWM/CX_MD_INTERFACE = 1
+          /SCWM/CX_MD_MATERIAL_EXIST = 2
+          /SCWM/CX_MD_MAT_LGNUM_EXIST = 3
+          /SCWM/CX_MD_LGNUM_LOCID = 4
+          /SCWM/CX_MD = 5
+          .
+
+     REMSTRA = LS_DATAA-REM_STRA .
+     PUTSTRA = LS_DATAA-PUT_STRA.
+
+    WHEN 'SAVE'.
+
+       BREAK-POINT.
+       CALL FUNCTION 'CONVERSION_EXIT_MDLPD_INPUT'
+        EXPORTING
+          input  = 'CCG-001'
+        IMPORTING
+          output = lv_matid.
+
+      CALL FUNCTION 'CONVERSION_EXIT_MDLPD_OUTPUT'
+        EXPORTING
+          input  = lv_matid
+        IMPORTING
+          output = lv_matnr.
+
+     ls_LANGU = 'EN'.
+     ls_ENTITLED = 'BP1710'.
+     ls_LGNUM  = '1710'.
+     IS_MAT_LGNUM-ENTITLED
+     LGNUM
+
+      APPEND IS_MAT_LGNUM TO IT_MAT_LGNUM.
+      CALL FUNCTION '/SCWM/MATERIAL_WHST_MAINT_MULT'
+        EXPORTING
+          it_mat_lgnum                  = IT_MAT_LGNUM
+*         IT_MAT_LGTYP                  =
+          iv_lgnum                      = '1710'
+         IV_COMMIT                     = 'X'
+*         IV_CHECK_FIX_INDICATORS       =
+       IMPORTING
+         ET_BAPIRET                    = lt_bapiret
+                .
+
+        WHEN 'CANCEL'.
+          LEAVE PROGRAM .
+    WHEN 'BACK'.
+      LEAVE PROGRAM.
+
+
+
+  ENDCASE.
+
+ENDMODULE.

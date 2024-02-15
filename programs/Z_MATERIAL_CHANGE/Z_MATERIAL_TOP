@@ -1,0 +1,40 @@
+*&---------------------------------------------------------------------*
+*& Include Z_MATERIAL_CHANGE_TOP                    - Module Pool      Z_MATERIAL_CHANGE
+*&---------------------------------------------------------------------*
+PROGRAM Z_MATERIAL_CHANGE.
+
+TABLES : /SAPAPO/MATKEY , "PRODUCT NUMBER
+  /SAPAPO/MATMAP, "PRODUCT NUMBER
+  /SCWM/T305R,  "STOCK REMOVAL
+  /SCWM/T305Q, "PUTAWAY CONTROL
+  /SCWM/T300.
+
+
+DATA:  LV_MATID TYPE /SCWM/DE_MATID,       "PRODUCT
+       ENTITLED TYPE /SCWM/DE_ENTITLED, "OWNER
+       LGNUM TYPE /SCWM/LGNUM,          "WAREHOUSE
+       PUTSTRA TYPE /SCWM/DE_PUT_STRA,  "PUTAWAY
+       REMSTRA TYPE /SCWM/DE_PUT_STRA,  "STOCK REMOVAL
+       ls_lgnum   TYPE /SCWM/LGNUM,  "STRUCTURE LGNUM
+       lt_lgnum   TYPE /SCWM/T300,
+       ls_matid  TYPE /SCWM/DE_MATID,
+       lt_bapiret TYPE bapirettab,
+       ls_entitled   TYPE /SCWM/DE_ENTITLED,
+       lt_entitled   TYPE  /SCWM/T305R,
+       lv_iv_applic	 TYPE /SCWM/DE_BLOCAPPL,
+       ls_langu TYPE SPRAS,
+*       lv_matid   TYPE raw16,
+        lv_matnr   TYPE /SAPAPO/MATNR,
+       LS_DATAA TYPE /SCWM/S_MATERIAL_LGNUM.
+
+  DATA: ls_input TYPE /scmb/mdl_matid_str,
+        ls_data  TYPE /scmb/mdl_matnr_str,
+
+  IT_MAT_LGNUM TYPE /SCWM/TT_MATERIAL_LGNUM_MAINT,
+  IS_MAT_LGNUM TYPE /SCWM/S_MATERIAL_LGNUM_MAINT.
+
+
+*DATA: ls_matid  TYPE /SCWM/DE_MATID,
+
+*      ls_mat_lgnum   TYPE /SCWM/S_MATERIAL_LGNUM,
+*      lv_/scwm/cx_md   TYPE /SCWM/LGNUM.

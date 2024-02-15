@@ -1,0 +1,15 @@
+  method MODIFY.
+    SELECT SINGLE * FROM ZDEMO1 INTO @DATA(WA_emp) WHERE emp_id = @emp_id.
+
+    wa_emp-Name = Name.
+    wa_emp-Gender = Gender.
+    wa_emp-contact = contact.
+
+    IF sy-subrc = 0.
+
+      UPDATE zdemo1 FROM wa_emp.
+      WRITE: 'Data successfully Update'.
+    ELSE.
+      WRITE: 'Error when Updating data'.
+    ENDIF.
+  endmethod.

@@ -1,0 +1,42 @@
+FUNCTION ZO4USER10_EMP_ID_READ.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  IMPORTING
+*"     REFERENCE(EMPLOYEE_ID) TYPE  INT4
+*"  EXPORTING
+*"     REFERENCE(EMP_FIRST_NAME) TYPE  TEXT20
+*"     REFERENCE(EMP_LAST_NAME) TYPE  TEXT20
+*"     REFERENCE(EMP_DOB) TYPE  DATS
+*"     REFERENCE(GENDER) TYPE  TEXT20
+*"     REFERENCE(EMP_EMAIL) TYPE  TEXT20
+*"     REFERENCE(EMP_CITY) TYPE  TEXT20
+*"     REFERENCE(EMP_STATE) TYPE  ZO4USER10_STATE
+*"     REFERENCE(EMP_HIRE_DATE) TYPE  DATS
+*"     REFERENCE(EMP_DEPARTMENT) TYPE  ZO4USER10_DEPARTMENT
+*"     REFERENCE(EMP_POSITION) TYPE  TEXT20
+*"     REFERENCE(EMP_SALARY) TYPE  INT4
+*"     REFERENCE(OFFICE_LOCATION) TYPE  ZO4USER10_OFF_LOCATION
+*"     REFERENCE(EMP_RATING) TYPE  ZO4USER10_RATING
+*"----------------------------------------------------------------------
+SELECT SINGLE * FROM ZO4USER10_EMP_DB  INTO @DATA(ls_emp) where EMPLOYEE_ID = @EMPLOYEE_ID.
+
+ EMP_FIRST_NAME = ls_emp-EMP_FIRST_NAME.
+ EMP_LAST_NAME = ls_emp-EMP_Last_Name.
+ EMP_DOB = ls_emp-EMP_dob.
+  GENDER = ls_emp-Gender.
+ EMP_EMAIL = ls_emp-EMP_Email.
+ EMP_CITY = ls_emp-EMP_City.
+  EMP_STATE = ls_emp-EMP_State.
+  EMP_HIRE_DATE = ls_emp-EMP_hire_date.
+  EMP_DEPARTMENT = ls_emp-emp_department.
+  EMP_POSITION = ls_emp-emp_position.
+  EMP_SALARY = ls_emp-emp_salary.
+  OFFICE_LOCATION = ls_emp-office_location.
+  EMP_RATING = ls_emp-EMP_RATING.
+
+
+
+
+
+
+ENDFUNCTION.

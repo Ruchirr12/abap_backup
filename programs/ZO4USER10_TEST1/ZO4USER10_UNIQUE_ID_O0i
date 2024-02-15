@@ -1,0 +1,32 @@
+*&---------------------------------------------------------------------*
+*& Include          ZO4USER10_UNIQUE_ID_O01
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*& Module STATUS_0100 OUTPUT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+MODULE status_0100 OUTPUT.
+
+ SET PF-STATUS 'STATUS'.
+* SET TITLEBAR 'TITLEBAR'.
+ clear screen.
+*break-point.
+
+ LOOP AT SCREEN .
+   IF screen-name = 'ZO4USER10_EMP-SPOUSE_NAME' or screen-name = 'ZO4USER10_EMP-SPOUSE_NAME'.
+     IF married = 'X'.
+    screen-invisible = 0.
+
+     else .
+     screen-invisible = 1.
+     screen-input = 0.
+
+     ENDIF.
+      MODIFY SCREEN.
+
+   ENDIF.
+
+   ENDLOOP.
+
+ENDMODULE.

@@ -1,0 +1,11 @@
+*&---------------------------------------------------------------------*
+*& Module Pool      Z_MATERIAL_CHANGE
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+
+INCLUDE Z_MATERIAL_CHANGE_TOP                   .    " Global Data
+
+ INCLUDE Z_MATERIAL_CHANGE_O01                   .  " PBO-Modules
+ INCLUDE Z_MATERIAL_CHANGE_I01                   .  " PAI-Modules
+ INCLUDE Z_MATERIAL_CHANGE_F01                   .  " FORM-Routines

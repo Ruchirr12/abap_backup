@@ -1,0 +1,87 @@
+
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2001  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2001 INPUT.
+
+ CASE sy-ucomm.
+    WHEN 'EXECUTE'.
+
+  DATA : lt_guid_hu TYPE /SCWM/TT_GUID_HU ,
+         ls_guid_hu TYPE /SCWM/S_GUID_HU,
+         lt_huhdr type /SCWM/TT_HUHDR_INT,
+         ls_huhdr TYPE /SCWM/S_HUHDR_INT,
+         lt_qdoccat TYPE RSELOPTION ,
+         ls_qdoccat type RSDSSELOPT.
+
+
+ ls_qdoccat-sign = 'I'.
+ ls_qdoccat-option = 'EQ'.
+    append  ls_qdoccat to  lt_qdoccat.
+
+    ls_guid_hu-guid_hu = '000C298B329D1EDEACEFB94010024983'.
+  APPEND  ls_guid_hu to lt_guid_hu.
+
+      CALL FUNCTION '/SCWM/HU_SELECT_QUAN'
+       EXPORTING
+         IV_LGNUM           = '1710'
+*         IV_LOCK            =
+*         IR_WDATU           =
+*         IR_VFDAT           =
+*         IR_COO             =
+*         IR_INSP            =
+*         IR_IDPLATE         =
+         IR_QDOCCAT         = lt_qdoccat
+*         IT_QDOCID          =
+*         IR_QDSTGRP         =
+*         IT_QITMID          =
+         IT_GUID_HU         = lt_guid_hu
+*         IV_COMPLETE        =
+       IMPORTING
+*         ET_GUID_HU         =
+         ET_HUHDR           = lt_huhdr
+*         ET_HUITM           =
+*         ET_HUTREE          =
+*         ET_HIGH            =
+*       EXCEPTIONS
+*         WRONG_INPUT        = 1
+*         NOT_POSSIBLE       = 2
+*         OTHERS             = 3
+.
+If lt_huhdr IS NOT INITIAL.
+    ls_VLPLA = ls_huhdr-lgpla.
+  ENDIF.
+
+
+
+READ TABLE lt_huhdr INTO ls_huhdr index  1.
+
+  WHEN 'CREATE'.
+    CALL FUNCTION '/SCWM/TO_CREATE'
+      EXPORTING
+        iv_lgnum               = '1710'
+*       IV_UPDATE_TASK         = ''
+*       IV_COMMIT_WORK         = 'X'
+*       IV_WTCODE              =
+*       IV_BNAME               =
+*       IS_RFC_QUEUE           =
+       IT_CREATE              = LT_CREATE
+*       IT_CREATE_EXC          =
+*       IV_PROCESSOR_DET       = ' '
+     IMPORTING
+       EV_TANUM               = LV_TANUM
+       ET_LTAP_VB             = LT_LTAP_VB
+*       ET_SERID               =
+       ET_BAPIRET             = LT_BAPIRET
+*       EV_SEVERITY            =
+              .
+
+  WHEN 'CANCEL'.
+    LEAVE PROGRAM.
+
+
+ ENDCASE.
+
+ENDMODULE.

@@ -1,0 +1,121 @@
+*&---------------------------------------------------------------------*
+*& Include          ZO4USER10_WT_I01
+*&---------------------------------------------------------------------*
+
+*&SPWIZARD: INPUT MODULE FOR TC 'RUCHIR'. DO NOT CHANGE THIS LINE!
+*&SPWIZARD: PROCESS USER COMMAND
+MODULE RUCHIR_USER_COMMAND INPUT.
+  OK_CODE = SY-UCOMM.
+  PERFORM USER_OK_TC USING    'RUCHIR'
+                              'G_RUCHIR_ITAB'
+                              'FLAG'
+                     CHANGING OK_CODE.
+  SY-UCOMM = OK_CODE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2001  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2001 INPUT.
+  CASE sy-ucomm.
+    WHEN 'BACK'.
+      LEAVE PROGRAM.
+    WHEN 'EXIT'.
+      LEAVE TO SCREEN 0.
+    WHEN 'CANCEL'.
+      LEAVE TO SCREEN 0.
+
+       WHEN 'CREATE'.
+      CALL SCREEN 2002 STARTING AT 50 1
+                       ENDING AT 102 12.
+
+    WHEN 'DELETE'.
+      CALL SCREEN 2003 STARTING AT 50 1
+                       ENDING AT 85 7.
+
+    WHEN 'SEARCH'.
+      CALL SCREEN 2004 STARTING AT 50 1
+                     ENDING AT 102 14.
+
+  ENDCASE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2002  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2002 INPUT.
+   CASE SY-UCOMM.
+WHEN 'BACK'.
+      LEAVE TO SCREEN 0.
+ ENDCASE.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2003  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2003 INPUT.
+   CASE SY-UCOMM.
+WHEN 'HOME'.
+      LEAVE TO SCREEN 0.
+ ENDCASE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2004  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2004 INPUT.
+ CASE SY-UCOMM.
+WHEN 'HOME'.
+      LEAVE TO SCREEN 0.
+ ENDCASE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_1234  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_1234 INPUT.
+   CASE SY-UCOMM.
+WHEN 'BACK'.
+      LEAVE TO SCREEN 2001.
+ ENDCASE.
+
+ENDMODULE.
+
+*&SPWIZARD: INPUT MODULE FOR TC 'ORDIMO'. DO NOT CHANGE THIS LINE!
+*&SPWIZARD: PROCESS USER COMMAND
+MODULE ORDIMO_USER_COMMAND INPUT.
+  OK_CODE = SY-UCOMM.
+  PERFORM USER_OK_TC USING    'ORDIMO'
+                              'G_ORDIMO_ITAB'
+                              'FLAG'
+                     CHANGING OK_CODE.
+  SY-UCOMM = OK_CODE.
+ENDMODULE.
+
+*&SPWIZARD: INPUT MODULE FOR TC 'SCWMC'. DO NOT CHANGE THIS LINE!
+*&SPWIZARD: PROCESS USER COMMAND
+MODULE SCWMC_USER_COMMAND INPUT.
+  OK_CODE = SY-UCOMM.
+  PERFORM USER_OK_TC USING    'SCWMC'
+                              'G_SCWMC_ITAB'
+                              'FLAG'
+                     CHANGING OK_CODE.
+  SY-UCOMM = OK_CODE.
+ENDMODULE.
+
+*&SPWIZARD: INPUT MODULE FOR TC 'SCWMO'. DO NOT CHANGE THIS LINE!
+*&SPWIZARD: PROCESS USER COMMAND
+MODULE SCWMO_USER_COMMAND INPUT.
+  OK_CODE = SY-UCOMM.
+  PERFORM USER_OK_TC USING    'SCWMO'
+                              'G_SCWMO_ITAB'
+                              'FLAG'
+                     CHANGING OK_CODE.
+  SY-UCOMM = OK_CODE.
+ENDMODULE.

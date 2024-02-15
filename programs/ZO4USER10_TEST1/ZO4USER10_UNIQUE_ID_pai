@@ -1,0 +1,49 @@
+*----------------------------------------------------------------------*
+***INCLUDE ZO4USER10_TEST1_USER_COMMANI01.
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_0100 INPUT.
+  CASE sy-ucomm.
+    WHEN 'SAVE'.
+      DATA: ls_emp TYPE zo4user10_emp.
+
+      ls_emp-EMP_name = zo4user10_emp-emp_name.
+      ls_emp-emp_city = zo4user10_emp-emp_city.
+      ls_emp-CONTACT = zo4user10_emp-CONTACT.
+      ls_emp-emp_AGE = zo4user10_emp-emp_AGE.
+      ls_emp-SPOUSE_NAME = zo4user10_emp-SPOUSE_NAME.
+
+      SELECT
+  MAX( emp_id )
+  FROM zo4user10_emp
+  INTO @DATA(lv_max_emp_id).
+*
+
+      lv_max_emp_id = lv_max_emp_id + 1.
+
+
+      ls_emp-emp_id  = lv_max_emp_id.
+
+      MODIFY zo4user10_emp FROM ls_emp.
+*
+*
+      IF ls_emp-EmP_id IS NOT INITIAL.
+
+
+        DATA : lv_message TYPE string.
+        lv_message =  'Data saved successfully for employee '   &&  ls_emp-Emp_id .
+        MESSAGE lv_message TYPE 'S'.
+      ELSE.
+        MESSAGE: 'Error when saving data' TYPE 'E'.
+      ENDIF.
+
+   WHEN 'BACK'.
+     LEAVE PROGRAM.
+
+  ENDCASE.
+
+ENDMODULE.

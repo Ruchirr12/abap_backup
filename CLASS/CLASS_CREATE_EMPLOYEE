@@ -1,0 +1,26 @@
+  method CREATE_EMPLOYEE.
+   DATA LS_EMP TYPE ZDEMO1.
+
+*SELECT SINGLE * FROM ZDEMO1 INTO @DATA(ls_EMPLOYEE) WHERE EMP_id = @EMP_id.
+
+
+  ls_EMP-name = name.
+  ls_EMP-gender = gender.
+  ls_EMP-contact = contact.
+
+
+*select MAX EMP_ID FROM ZDEMO1.
+
+
+SELECT
+  MAX( EMP_ID )
+  FROM ZDEMO1
+  INTO @DATA(LV_MAX_EMP_ID).
+
+LV_MAX_EMP_ID = LV_MAX_EMP_ID + 1.
+
+ LS_EMP-EMP_ID = LV_MAX_EMP_ID.
+
+  EMP_ID = LS_EMP-EMP_ID.
+   MODIFY ZDEMO1 FROM ls_EMP.
+  endmethod.

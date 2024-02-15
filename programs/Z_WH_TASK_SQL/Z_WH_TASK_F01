@@ -1,0 +1,82 @@
+*&---------------------------------------------------------------------*
+*& Include          Z_WH_TASK_F01
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*& Form READ_HU
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM read_hu .
+
+  /scwm/huhdr-huident =  |{ /scwm/huhdr-huident ALPHA = IN }|.
+
+    CALL FUNCTION '/SCWM/HUHEADER_READ'
+     EXPORTING
+       IV_APPL            = 'WME'
+       IV_HUIDENT         = /scwm/huhdr-huident
+       IV_DB_SELECT       = 'X'
+     IMPORTING
+       ES_HUHEADER        = ls_huhdr
+     EXCEPTIONS
+       NOT_FOUND          = 1
+       INPUT              = 2
+       ERROR              = 3
+       DELETED            = 4
+       OTHERS             = 5
+              .
+    IF sy-subrc <> 0.
+* Implement suitable error handling here
+      ELSE .
+        vlpla = ls_huhdr-lgpla.
+    ENDIF.
+
+*      IF ls_huhdr IS NOT INITIAL.
+*    data LV_MESSAGE TYPE STRING.
+*    lv_message =  'Data Entered successfully'  .
+*
+*  MESSAGE lv_message type 'S'.
+*
+*  ELSE.
+*    lv_message =  'Enter correct HU '.
+*     MESSAGE lv_message type 'E'.
+*  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form CREATE_HU_WT
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM create_hu_wt .
+
+*    APPEND INITIAL LINE TO lt_create_hu ASSIGNING FIELD-SYMBOL(<fs_create_hu>).
+*     <fs_create_hu>-huident = ls_huhdr-huident.
+*     <fs_create_hu>-procty = '9999'.
+*     <fs_create_hu>-nlpla = nlpla.
+*     <fs_create_hu>-squit = abap_true.
+
+ls_create_hu-huident = ls_huhdr-huident.
+        ls_create_hu-procty = '9999'.
+        ls_create_hu-nlpla = nlpla.
+        ls_create_hu-squit = abap_true.
+      APPEND ls_create_hu TO lt_create_hu.
+
+  CALL FUNCTION '/SCWM/TO_CREATE_MOVE_HU'
+    EXPORTING
+      iv_lgnum               = /scwm/lagp-lgnum
+     IV_COMMIT_WORK         = 'X'
+     IV_BNAME               = SY-UNAME
+      it_create_hu           = lt_create_hu
+   IMPORTING
+     EV_TANUM               = lv_tanum
+     ET_BAPIRET             = lt_bapiret
+     EV_SEVERITY            = lv_severity
+     .
+
+ENDFORM.

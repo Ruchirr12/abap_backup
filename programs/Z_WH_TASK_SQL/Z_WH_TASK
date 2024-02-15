@@ -1,0 +1,11 @@
+*&---------------------------------------------------------------------*
+*& Module Pool      Z_WH_TASK
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+
+INCLUDE Z_WH_TASK_TOP                           .    " Global Data
+
+ INCLUDE Z_WH_TASK_O01                           .  " PBO-Modules
+ INCLUDE Z_WH_TASK_I01                           .  " PAI-Modules
+ INCLUDE Z_WH_TASK_F01                           .  " FORM-Routines

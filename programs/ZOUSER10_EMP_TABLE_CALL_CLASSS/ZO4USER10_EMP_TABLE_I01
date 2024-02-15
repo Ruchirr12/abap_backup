@@ -1,0 +1,129 @@
+*&---------------------------------------------------------------------*
+*& Include          ZO4USER10_EMP_TABLEE_I01
+*&---------------------------------------------------------------------*
+
+*&SPWIZARD: INPUT MODULE FOR TC 'SCREEN'. DO NOT CHANGE THIS LINE!
+*&SPWIZARD: PROCESS USER COMMAND
+MODULE SCREEN_USER_COMMAND INPUT.
+  OK_CODE = SY-UCOMM.
+  PERFORM USER_OK_TC USING    'SCREEN'
+                              'G_SCREEN_ITAB'
+                              'FLAG'
+                     CHANGING OK_CODE.
+  SY-UCOMM = OK_CODE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2002  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2002 INPUT.
+    CASE SY-UCOMM.
+    WHEN 'SAVE'.
+      CALL METHOD zuser10_class=>create_employee
+        EXPORTING
+          name    = ZDEMO1-Name
+          gender  = ZDEMO1-Gender
+          contact = ZDEMO1-Contact
+        IMPORTING
+          emp_id  = ZDEMO1-emp_id.
+          .
+
+        IF ZDEMO1-emp_id IS NOT INITIAL.
+    data LV_MESSAGE TYPE STRING.
+    lv_message =  'Data saved successfully for employee '  &&  ZDEMO1-emp_id.
+
+  MESSAGE lv_message type 'S'.
+  ELSE.
+     MESSAGE: 'Error when saving data' TYPE 'E'.
+      ENDIF.
+    WHEN 'BACK'.
+      LEAVE TO SCREEN 0.
+  ENDCASE.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2001  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2001 INPUT.
+CASE sy-ucomm.
+
+
+    WHEN 'BACK'.
+      LEAVE PROGRAM.
+    WHEN 'EXIT'.
+      LEAVE TO SCREEN 0.
+    WHEN 'CANCEL'.
+      LEAVE TO SCREEN 0.
+
+
+       WHEN 'INSERT'.
+      CALL SCREEN 2002 STARTING AT 50 1
+                       ENDING AT 102 12.
+
+    WHEN 'DELETE'.
+      CALL SCREEN 2003 STARTING AT 50 1
+                       ENDING AT 85 7.
+
+    WHEN 'CHANGE'.
+      CALL SCREEN 2004 STARTING AT 50 1
+                     ENDING AT 102 14.
+
+  ENDCASE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2003  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2003 INPUT.
+  CASE sy-ucomm.
+    WHEN 'DELETE'.
+      CALL METHOD zo4user10_delete=>delete_method
+        EXPORTING
+          emp_id = ZDEMO1-EMP_ID
+          .
+      IF ZDEMO1-Emp_id IS NOT INITIAL.
+
+        lv_message =  'Data deleted successfully for employee '   &&  ZDEMO1-Emp_id .
+
+        MESSAGE lv_message TYPE 'S'.
+      ELSE.
+        MESSAGE: 'Error when deleting data' TYPE 'E'.
+      ENDIF.
+
+    WHEN 'BACK'.
+      CALL SCREEN 2001.
+  ENDCASE.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2004  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2004 INPUT.
+ CASE SY-UCOMM.
+   WHEN 'SAVE'.
+     CALL METHOD zo4user10_modify=>modify
+       EXPORTING
+         emp_id  = ZDEMO1-EMP_ID
+         name    = ZDEMO1-NAME
+         gender  = ZDEMO1-GENDER
+         contact = ZDEMO1-CONTACT
+         .
+   IF ZDEMO1-Emp_id IS NOT INITIAL.
+
+        lv_message =  'Data saved successfully for employee '   &&  zDEMO1-Emp_id .
+
+        MESSAGE lv_message TYPE 'S'.
+      ELSE.
+        MESSAGE: 'Error when saving data' TYPE 'E'.
+      ENDIF.
+
+    WHEN 'BACK'.
+      LEAVE TO SCREEN 0.
+ ENDCASE.
+ENDMODULE.

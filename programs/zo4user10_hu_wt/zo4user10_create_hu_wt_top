@@ -1,0 +1,39 @@
+*&---------------------------------------------------------------------*
+*& Include ZO4USER10_HU_WT_TOP                      - Module Pool      ZO4USER10_HU_WT
+*&---------------------------------------------------------------------*
+PROGRAM ZO4USER10_HU_WT.
+
+TABLES : /SCWM/S_ASP_HU_AD ,
+         /SCWM/S_ASP_MAT,
+         /SCWM/S_ASPQ_HU,
+         /scwm/huhdr.
+
+DATA  : lt_create  TYPE /scwm/tt_to_create_int,
+        ls_create  TYPE /scwm/s_to_create_int,
+        lt_bapiret TYPE bapirettab,
+        lv_matid   TYPE raw16,
+        lv_matnr   TYPE matnr,
+        lv_tanum type /SCWM/TANUM,
+        LT_LTAP_VB type /SCWM/TT_LTAP_VB,
+        IR_HUIDENT TYPE /scwm/s_aspq_hu,
+        SOURCE_BIN type /scwm/de_lgpla,
+        destination_bin type /SCWM/LTAP_NLPLA ,
+
+         NLPLA      TYPE /scwm/ltap_nlpla.
+
+data : vlpla type /scwm/de_lgpla.
+data : Handling_unit type /SCWM/DE_HUIDENT.
+DATA: LV_LGNUM TYPE /SCWM/LGNUM,
+      SQUIT type /SCWM/RL03TSQUIT.
+
+DATA:   ls_VLPLA      TYPE /scwm/ltap_vlpla,
+        ls_NLPLA      TYPE /scwm/ltap_nlpla,
+        ls_PROCTY     TYPE /scwm/de_procty,
+        ls_CWQUAN     TYPE /scwm/de_cwquan,
+        ls_OWNER      TYPE /scwm/de_owner,
+        ls_AVAIL_QUAN TYPE /scwm/de_ui_avlqty,
+        ls_ENTITLED   TYPE /scwm/de_entitled,
+        ls_ANFME      TYPE /scwm/rl03tanfme,
+        ls_ALTME      TYPE /scwm/lrmei,
+        ls_CAT        TYPE /lime/stock_category,
+        ls_SGUID_HU   TYPE /scwm/guid_hu.

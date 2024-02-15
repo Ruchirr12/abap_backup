@@ -1,0 +1,60 @@
+*&---------------------------------------------------------------------*
+*& Report ZO4USER10_EMP_DB
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ZO4USER10_EMP_DB.
+
+
+
+data : lt_ZO4USER10_EMP_DETAIL type TABLE of ZO4USER10_EMP_DB,
+        ls_ZO4USER10_EMP_DETAIL type ZO4USER10_EMP_DB.
+
+
+SELECT * FROM ZO4USER10_EMP_DB into TABLE lt_ZO4USER10_EMP_DETAIL.
+
+   WRITE : / 'Employee Details' COLOR 6 INTENSIFIED ON INVERSE ON.
+FORMAT COLOR 3.
+
+WRITE: / sy-datum.
+ULINE.
+WRITE: / sy-uname.
+ULINE.
+FORMAT COLOR OFF.
+
+FORMAT COLOR COL_HEADING.
+   write: / 'EMPLOYEE ID', 12 '|',
+            'NAME', 29'|',
+            'DOB', 40'|',
+            'GENDER', 50 '|',
+            'EMAIL', 70 '|',
+            'CITY', 80 '|',
+            'STATE', 95 '|',
+            'HIRE DATE', 110'|',
+            'DEPARTMENT', 125 '|',
+            'POSITION ' ,140 '|',
+            'SALARY', 155 '|',
+            'LOCATION', 170'|',
+            'RATING', 183 '|'.
+
+FORMAT  COLOR OFF.
+ULINE.
+
+LOOP AT lt_ZO4USER10_EMP_DETAIL INTO ls_ZO4USER10_EMP_DETAIL.
+
+  WRITE : / ls_ZO4USER10_EMP_DETAIL-EMPLOYEE_ID, 12 '|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_FIRST_NAME  &&  ls_ZO4USER10_EMP_DETAIL-EMP_LAST_NAME,29'|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_DOB,40'|',
+ ls_ZO4USER10_EMP_DETAIL-GENDER,50 '|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_EMAIL,70 '|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_CITY,80 '|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_STATE,95 '|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_HIRE_DATE,110 '|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_DEPARTMENT, 125'|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_POSITION, 140 '|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_SALARY,155 '|',
+ ls_ZO4USER10_EMP_DETAIL-OFFICE_LOCATION, 170 '|',
+ ls_ZO4USER10_EMP_DETAIL-EMP_RATING, 183 '|'.
+
+uline.
+ENDLOOP.

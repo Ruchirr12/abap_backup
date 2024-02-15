@@ -1,0 +1,73 @@
+*&---------------------------------------------------------------------*
+*& Include          ZO4USER10_WT_CREATE_I01
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2000  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2000 INPUT.
+   CASE SY-UCOMM.
+WHEN 'FIND'.
+*   navigate to tx:/SCWM/ADHOC by using HU data ------------------------
+        CALL FUNCTION '/SCWM/CALL_ADHOC'
+          EXPORTING
+            iv_process       = /scwm/if_ui_adma=>sc_process_2
+            iv_lgnum         = ls_default-lgnum
+            it_aspk_adhoc    = lt_aspk_adhoc
+            iv_new_roll_area = abap_true.
+      ELSE.
+*       This cleanup clears the ADHOC table of the CANCPICK SP as well
+        action(
+         EXPORTING
+           iv_action     = /scwm/if_sp_cancpick_c=>sc_act_cleanup
+           iv_sideeffect = /scmb/if_constant=>sc_se_none ).
+      ENDIF.
+
+*   display delivery --------------------------------------------------
+    WHEN /scwm/if_sp_cancpick_c=>sc_ok_display_dlv.
+      CHECK /scmb/cl_base=>exit( ) = abap_true.
+      call_delivery( ).
+      so_controller->message_send(
+        iv_message_id = /scmb/if_constant=>sc_msg_refresh
+        io_sender     = me ).
+      CALL SCREEN 2001.
+WHEN 'BACK'.
+   LEAVE PROGRAM.
+ ENDCASE.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_2001  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_2001 INPUT.
+ CASE SY-UCOMM.
+   WHEN 'PROCESS'.
+
+
+                 CALL FUNCTION '/SCWM/TO_CREATE'
+                    EXPORTING
+                      iv_lgnum               = '1710'
+                     IV_UPDATE_TASK         = ''
+                     IV_COMMIT_WORK         = 'X'
+*                     IV_WTCODE              =
+*                     IV_BNAME               = SY-UNAME
+*                     IS_RFC_QUEUE           =
+                     IT_CREATE              = lt_create
+*                     IT_CREATE_EXC          =
+*                     IV_PROCESSOR_DET       = ' '
+                   IMPORTING
+                     EV_TANUM               = lv_tanum
+*                     ET_LTAP_VB             =
+*                     ET_SERID               =
+                     ET_BAPIRET             = lt_bapiret
+*                     EV_SEVERITY            =
+                            .
+
+
+   WHEN 'BACK'.
+     LEAVE PROGRAM.
+ ENDCASE.
+ENDMODULE.

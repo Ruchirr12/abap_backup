@@ -1,0 +1,68 @@
+*&---------------------------------------------------------------------*
+*& Report ZO4USER10_EMP_DTB
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ZO4USER10_EMP_DTB.
+
+Data : lt_ZO4USER10_EMP_DTB TYPE TABLE OF ZO4USER10_EMP_DB,
+      ls_ZO4USER10_EMP_DTB TYPE ZO4USER10_EMP_DB.
+
+PARAMETERS : P_EMP_ID  TYPE ZO4USER10_EMP_DB-EMPLOYEE_ID.
+
+
+SELECT SINGLE * FROM ZO4USER10_EMP_DB INTO ls_ZO4USER10_EMP_DTB
+  WHERE EMPLOYEE_ID = P_EMP_ID.
+
+  WRITE : / 'Employee Details' COLOR 6 INTENSIFIED ON INVERSE ON.
+FORMAT COLOR 3.
+
+WRITE :/ sy-datum.
+ULINE.
+WRITE :/ sy-uname.
+FORMAT COLOR OFF.
+
+ULINE.
+
+ IF SY-SUBRC = 0.
+ULINE.
+FORMAT COLOR COL_HEADING.
+   write: / 'EMPLOYEE ID', 12 '|',
+            'NAME', 29'|',
+            'DOB', 40'|',
+            'GENDER', 50 '|',
+            'EMAIL', 70 '|',
+            'CITY', 80 '|',
+            'STATE', 95 '|',
+            'HIRE DATE', 110'|',
+            'DEPARTMENT', 125 '|',
+            'POSITION ' ,140 '|',
+            'SALARY', 155 '|',
+            'LOCATION', 170'|',
+            'RATING', 183 '|'.
+
+FORMAT  COLOR OFF.
+ULINE.
+
+LOOP AT lt_ZO4USER10_EMP_DTB INTO ls_ZO4USER10_EMP_DTB.
+
+  WRITE : / ls_ZO4USER10_EMP_DTB-EMPLOYEE_ID, 12 '|',
+ ls_ZO4USER10_EMP_DTB-EMP_FIRST_NAME  &&  ls_ZO4USER10_EMP_DTB-EMP_LAST_NAME,29'|',
+ ls_ZO4USER10_EMP_DTB-EMP_DOB,40'|',
+ ls_ZO4USER10_EMP_DTB-GENDER,50 '|',
+ ls_ZO4USER10_EMP_DTB-EMP_EMAIL,70 '|',
+ ls_ZO4USER10_EMP_DTB-EMP_CITY,80 '|',
+ ls_ZO4USER10_EMP_DTB-EMP_STATE,95 '|',
+ ls_ZO4USER10_EMP_DTB-EMP_HIRE_DATE,110 '|',
+ ls_ZO4USER10_EMP_DTB-EMP_DEPARTMENT, 125'|',
+ ls_ZO4USER10_EMP_DTB-EMP_POSITION, 140 '|',
+ ls_ZO4USER10_EMP_DTB-EMP_SALARY,155 '|',
+ ls_ZO4USER10_EMP_DTB-OFFICE_LOCATION, 170 '|',
+ ls_ZO4USER10_EMP_DTB-EMP_RATING, 183 '|'.
+
+uline.
+ENDLOOP.
+
+ ELSE.
+     WRITE:/ 'EMPLOYEE NOT FOUND.'.
+     ENDIF.

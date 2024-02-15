@@ -1,0 +1,30 @@
+*&---------------------------------------------------------------------*
+*& Include Z_WH_TASK_TOP                            - Module Pool      Z_WH_TASK
+*&---------------------------------------------------------------------*
+PROGRAM Z_WH_TASK MESSAGE-ID /scwm/ui_adma.
+
+TABLES : /scwm/huhdr,
+         /scwm/lagp.
+
+DATA : vlpla TYPE /scwm/de_lgpla,                " SOURCE BIN
+       Handling_unit TYPE /scwm/de_huident,      " HANDLING UNIT
+       lv_lgnum TYPE /scwm/lgnum,                " Warehouse Number
+       squit    TYPE /scwm/rl03tsquit,           " WAREHOUSE TASK CONFIRM
+       lt_bapiret TYPE bapirettab,               " BAPI Return Information
+       lt_tanum   TYPE /scwm/tanum,              " Warehouse Task
+       ls_NLPLA   TYPE /scwm/ltap_nlpla,         " Destination Storage Bin
+       nlpla      TYPE /scwm/ltap_nlpla,         " DESTINATION BIN
+       lt_guid_hu TYPE /scwm/tt_guid_hu,         " Table of HU GUIDs
+       ls_guid_hu TYPE /scwm/s_guid_hu,          " GUID of Handling Unit
+       lt_huhdr   TYPE /scwm/tt_huhdr_int,       " Table Type for HU Headers in the Internal Structure
+       ls_huhdr   TYPE /scwm/s_huhdr_int,        " STRUCTURE Type for HU Headers in the Internal Structure
+       lt_qdoccat TYPE rseloption,               " SELECT-OPTIONS Table
+       ls_qdoccat TYPE rsdsselopt,               " Structure of generic SELECT-OPTION
+       lv_tanum     TYPE /scwm/tanum,            " Warehouse Task
+       lv_severity  TYPE bapi_mtype.             " Message type: S Success, E Error, W Warning, I Info, A Abort
+
+
+DATA :  lt_create  TYPE /scwm/tt_to_create_int,   " Structure for Creating WTs
+       ls_create  TYPE /scwm/s_to_create_int,    " Structure for Creating WTs
+       lt_create_hu TYPE /scwm/tt_to_crea_hu,    " Table Type for Creating HU Warehouse Task
+       ls_create_hu TYPE /scwm/s_to_crea_hu.     " Structure for Creating HU Warehouse Tasks

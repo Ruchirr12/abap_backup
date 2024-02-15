@@ -1,0 +1,61 @@
+*----------------------------------------------------------------------*
+***INCLUDE ZO4USER10_EMP_MP_USER_COMMAI01.
+*----------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0101  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+
+
+
+*MODULE user_command_0101 INPUT.
+*BREAK O4USER10.
+*CASE SY-UCOMM.
+*  WHEN 'SAVE' .
+**    PERFORM SAVE_DATA.
+*    DATA ls_emp type ZO4USER10_EMP.
+**   MOVE-CORRESPONDING ZO4USER10_EMP_MODULE_POOL to gs_sample_emp.
+*
+*    ls_emp-emp_name = gs_sample_emp-EMP_NAME.
+*    ls_emp-emp_city = gs_sample_emp-EMP_CITY.
+*    ls_emp-CONTACT = gs_sample_emp-CONTACT.
+*    ls_emp-EMP_AGE = gs_sample_emp-EMP_AGE.
+*
+* MOdify ZO4USER10_EMP FROM ls_emp.
+*
+*  WHEN 'BACK' .
+*   LEAVE PROGRAM .
+*ENDCASE.
+*ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0200  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_0200 INPUT.
+
+  BREAK O4USER10.
+  CASE SY-UCOMM.
+*    WHEN 'CREATE_EMPLOYEE'.
+*      " Get data from screen fields
+*      CALL FUNCTION 'DIALOG_MESSAGE'
+*        EXPORTING
+*          message_text = 'Employee created successfully!'.
+*      " Add logic to generate employee ID and save details
+    WHEN 'SAVE'.
+      DATA ls_emp TYPE ZO4USER10_EMP.
+      ls_emp-emp_name = gs_sample_emp-EMP_NAME.
+      ls_emp-emp_city = gs_sample_emp-EMP_CITY.
+      ls_emp-CONTACT = gs_sample_emp-CONTACT.
+      ls_emp-EMP_AGE = gs_sample_emp-EMP_AGE.
+
+      SELECT SINGLE * FROM ZO4USER10_EMP INTO ls_emp WHERE EMP_ID = gs_sample_emp-EMP_ID.
+      IF sy-subrc = 0.
+        MODIFY ZO4USER10_EMP FROM ls_emp.
+      ENDIF.
+
+    WHEN 'BACK'.
+      LEAVE PROGRAM.
+  ENDCASE.
+ENDMODULE.
